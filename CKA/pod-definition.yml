@@ -1,0 +1,74 @@
+apiVersion: v1
+kind: Pod
+metadata:
+    name: myapp-pod
+    labels:
+        app: myapp
+        type: front-end
+spec:
+    containers:
+      - name: nginx-controller
+        image: nginx
+        ports:
+         -  containerPort: 8080
+        resources:
+            requests:
+                memory: "1Gi"
+                cpu: 1
+            limits:
+                memory: "2Gi"
+                cpu: 2
+        envFrom:
+          - configMapRef:
+                name: app-config
+          - secretRef:
+                name: app-secret
+        env:
+          - name: APP_COLOR
+            value: pink
+          - name: APP_MODE
+            value: prod
+            # OR
+          - name: APP_COLOR
+            valueFrom:
+                configMapKeyRef:
+                    name: app-config
+                    key: APP_COLOR
+          - name: DB_Password
+            valueFrom:
+                secretKeyRef:
+                    name: app-secret
+                    key: DB_Password
+    tolerations:
+      - key: "app"
+        operator:"Equal"
+        value:"myapp"
+        effect:"NoSchedule"
+    nodeSelector: #to enable pod to end up on Large label node
+        size: Large
+#nodeSelector above OR affinity below
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: size
+              operator: In #can also use NotIn
+              values:
+              - Large
+              - Medium
+              
+#kubectl create -f pod pod-definition.yml
+#kubectl get pods --selector app=myapp
+
+#apply taint for node and tolerance for pod as above
+#kubectl taint nodes node-name key=value:taint-effect
+
+#taint-effect (in NoSchedule, PreferNoSchedule, NoExecute) defines what happens to pods if they do not tolerate the taint
+
+#kubectl taint nodes node01 app=myapp:NoSchedule
+
+#labelling a node:
+#kubectl label nodes <node-name> <label-key>=<label-value>
+#kubectl label nodes nodel size=Large
+

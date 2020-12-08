@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: bvs-python-web
+  name: bvs-python-web-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bvs-python-web
+  template:
+    metadata:
+      labels:
+        app: bvs-python-web #to be given in the service
+    spec:
+      containers:
+      - image: bvssasidhar/bvs_python_web:0.0.1
+        name: bvs-python-web
+---
+apiVersion: v1
+kind: Service
+metadata: 
+    name: bvs-python-web-service
+spec: 
+    type: LoadBalancer
+    ports:
+      - targetPort: 5000
+        port: 80
+    selector: #pull the labels from the Pod metadata section
+        app: bvs-python-web

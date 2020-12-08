@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata: 
+    name: monitoring-daemon
+spec: 
+    template:
+        metadata:
+            labels:
+                app: monitoring-agent
+        spec:
+            containers:
+              - name: monitoring-agent
+                image: mon-agent-image
+    selector:
+        matchLabels:
+            app: monitoring-agent
+    
+#kubectl create -f daemon-set-definition.yml
+
