@@ -1,0 +1,35 @@
+<html>
+   <head>
+       <title>quotegen - worlds first quote generator</title>
+       <style>
+           body {
+               background: black;
+           }
+           #main {
+               color: white;
+               text-align: center;
+               font-weight: bold;
+               font-family: monospace;
+               padding-top: 60px;
+           }
+       </style>
+   </head>
+   <body>
+       <div id="main"></div>
+       <script>
+           document.addEventListener('DOMContentLoaded', function() {
+               var xhr = new XMLHttpRequest();
+               xhr.onreadystatechange = function() {
+                   if (xhr.readyState === 4){
+                       var data = JSON.parse(xhr.responseText);
+                       var elem = document.getElementById('main');
+                       elem.style.fontSize = data['size']+'px';
+                       elem.innerHTML = data['text'];
+                   }
+               };
+               xhr.open('GET', '/quote');
+               xhr.send();
+           });
+       </script>
+   </body>
+</html>

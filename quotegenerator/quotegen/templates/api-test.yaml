@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "quotegen.fullname" . }}-api-test
+  labels:
+{{- include "quotegen.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  template:
+    metadata:
+      name: {{ include "quotegen.fullname" . }}-api-test
+      labels:
+{{- include "quotegen.labels" . | nindent 8 }}
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: api-test
+        image: curlimages/curl
+        command:
+          - "/bin/sh"
+          - "-c"
+          - '[ "$(curl -s {{ include "quotegen.fullname" . }}:8080/quote)" != "$(curl -s {{ include "quotegen.fullname" . }}:8080/quote)" ]'
+

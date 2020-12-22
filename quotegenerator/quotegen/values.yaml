@@ -1,0 +1,12 @@
+image:
+  repo: localhost:32000/quotes
+  tag: v1
+
+env:
+  FONT_SIZE: 20
+
+replicas: 2
+
+service:
+  type: NodePort
+  port: 30001
