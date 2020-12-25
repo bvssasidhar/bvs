@@ -3,7 +3,7 @@ kind: Job
 metadata:
   name: {{ include "quotegen.fullname" . }}-pre-delete-hook
   labels:
-{{- include "quotegen.labels" . | nindent 4 }}
+    {{- include "quotegen.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": pre-delete
 spec:
@@ -11,7 +11,7 @@ spec:
     metadata:
       name: {{ include "quotegen.fullname" . }}-pre-delete-hook
       labels:
-{{- include "quotegen.labels" . | nindent 8 }}
+        {{- include "quotegen.labels" . | nindent 8 }}
     spec:
       restartPolicy: Never
       containers:

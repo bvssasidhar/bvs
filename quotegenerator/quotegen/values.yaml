@@ -1,6 +1,6 @@
 image:
-  repo: localhost:32000/quotes
-  tag: v1
+  repo: bvssasidhar/quotegenerator
+  tag: 0.0.1
 
 env:
   FONT_SIZE: 20
