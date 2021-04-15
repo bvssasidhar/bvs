@@ -1,25 +1,24 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "quotegen.fullname" . }}-api-test
+  name: {{ include "quotegen.fullname" . }}-post-rollback-hook
   namespace: {{ .Values.namespace | default "default" }}
   labels:
     {{- include "quotegen.labels" . | nindent 4 }}
   annotations:
-    "helm.sh/hook": test
+    "helm.sh/hook": post-rollback
+    "helm.sh/hook-weight": "5"
+    "helm.sh/hook-delete-policy": hook-succeeded
 spec:
   template:
     metadata:
-      name: {{ include "quotegen.fullname" . }}-api-test
+      name: {{ include "quotegen.fullname" . }}-post-rollback-hook
       labels:
         {{- include "quotegen.labels" . | nindent 8 }}
     spec:
       restartPolicy: Never
       containers:
-      - name: api-test
+      - name: post-rollback
         image: curlimages/curl
-        command:
-          - "/bin/sh"
-          - "-c"
-          - '[ "$(curl -s {{ include "quotegen.fullname" . }}:8080/quote)" != "$(curl -s {{ include "quotegen.fullname" . }}:8080/quote)" ]'
+        command: ['sh', '-c', 'echo The post-rollback hook Pod is running && sleep 15']
 

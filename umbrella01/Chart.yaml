@@ -1,0 +1,17 @@
+apiVersion: v2
+name: umbrella01
+description: A Helm chart for Kubernetes
+type: application
+
+# Chart.yaml
+version: 0.1.0
+
+dependencies:
+- name: simpleton
+  version: "0.2.0"
+  repository: "file://../simpleton"
+  condition: simpleton.enabled
+- name: quotegen
+  version: "0.1.0"
+  repository: "file://../quotegenerator/quotegen"
+  condition: quotegen.enabled

@@ -1,0 +1,9 @@
+dependencies:
+- name: simpleton
+  repository: file://../simpleton
+  version: 0.1.0
+- name: quotegen
+  repository: file://../quotegenerator/quotegen
+  version: 0.2.0
+digest: sha256:7a081982c652ad936801aaf12731591045d5ebfc696439b49360145a9ff1df16
+generated: "2021-04-12T23:09:09.2984617+05:30"

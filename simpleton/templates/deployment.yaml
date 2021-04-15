@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "simpleton.fullname" . }}
+  labels:
+    {{- include "simpleton.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      {{- include "simpleton.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "simpleton.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}-01
+          image: "{{ .Values.image.repo }}:{{ .Values.image.tag }}"
+          #command: [ "bin/sh", "-c", "--" ]
+          #args: [ "while true; do echo {{ .Values.message }} && sleep 10; done;" ]
+          args:
+            - /bin/sh
+            - -c
+            - touch healthy; sleep 700 #; touch healthy; sleep 30; rm healthy; sleep 60
+          imagePullPolicy: IfNotPresent
+          readinessProbe:
+            exec:
+              command:
+                - cat
+                - healthy
+            initialDelaySeconds: 10
+            periodSeconds: 3
+        - name: {{ .Chart.Name }}-02
+          image: "{{ .Values.image.repo }}:{{ .Values.image.tag }}"
+          args:
+            - /bin/sh
+            - -c
+            - sleep 25; touch healthy; sleep 700 #; touch healthy; sleep 30; rm healthy; sleep 60
+            #- sleep 700
+          imagePullPolicy: IfNotPresent
+          readinessProbe:
+            exec:
+              command:
+                - cat
+                - healthy
+            initialDelaySeconds: 20
+            periodSeconds: 5

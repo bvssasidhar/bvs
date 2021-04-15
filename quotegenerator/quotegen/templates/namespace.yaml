@@ -1,0 +1,12 @@
+#{{- if and .Release.Namespace (.Values.createReleaseNamespace | default false) -}}
+#apiVersion: v1
+#kind: Namespace
+#metadata:
+#  name: {{ .Release.Namespace }}
+#  namespace: {{ .Values.namespace }}
+#  annotations:
+#    my-annoation: {{ .Values.MyAnnotation }}
+#  labels:
+#    release: {{ .Release.Name }}
+#    my-other-label: other-label
+#{{- end -}}

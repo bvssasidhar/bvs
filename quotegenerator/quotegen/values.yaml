@@ -2,6 +2,8 @@ image:
   repo: bvssasidhar/quotegenerator
   tag: 0.0.1
 
+namespace: default
+
 env:
   FONT_SIZE: 20
 
@@ -9,4 +11,29 @@ replicas: 2
 
 service:
   type: NodePort
-  port: 30001
+  port: 30009
+
+dessert: cake
+environment: dev
+
+metrics: enabled
+printname: enabled
+places:
+  - tirupati
+  - bangalore
+
+otherenv:
+  color: blue
+  textfont: 20
+  debug: 1
+
+address01:
+  street: flat 01 number, apartment name
+  city: bangalore
+  state: karnataka
+
+address02:
+  street: flat 02 number, apartment name
+  city: bangalore
+  state: karnataka
+

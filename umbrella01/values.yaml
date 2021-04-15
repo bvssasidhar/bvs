@@ -1,0 +1,10 @@
+quotegen:
+  enabled: true
+  dessert: icecream
+  appVersion: "0.0.2"
+  image:
+    tag: "0.0.2"
+
+simpleton:
+  enabled: true
+

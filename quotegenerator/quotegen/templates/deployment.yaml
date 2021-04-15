@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "quotegen.fullname" . }}
+  namespace: {{ .Values.namespace | default "default" }}
   labels:
     {{- include "quotegen.labels" . | nindent 4 }}
 spec:
@@ -16,7 +17,7 @@ spec:
     spec:
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repo }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.image.repo }}:{{ .Values.image.tag | default .Chart.AppVersion }}" #.Chart.AppVersion
           imagePullPolicy: IfNotPresent
           env:
           {{- range $key, $value := .Values.env }}
@@ -27,4 +28,9 @@ spec:
             - name: http
               containerPort: 8080
               protocol: TCP
+          readinessProbe: #livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 5
 

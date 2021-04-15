@@ -1,0 +1,4 @@
+namespace: dev
+service:
+  type: NodePort
+  port: 30002

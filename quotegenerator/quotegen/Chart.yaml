@@ -1,3 +1,5 @@
+apiVersion: v2
 name: quotegen
 version: 0.1.0
-description: worlds first quote generator
+description: quote generator
+appVersion: 0.0.1

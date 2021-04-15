@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: {{ .Release.Name }}-configmap #{{ .Release.Name }}-configmap
+    namespace: {{ .Values.namespace | default "default" }}
+data:
+    dessert: {{ .Values.dessert }}
+    environment: {{ .Values.environment }}
+#    APP_COLOR: blue
+#    APP_MODE: prod
+#    {{- if eq .Values.metrics "enabled" }}
+#    useMetrics: "true"
+#    {{- else if eq .Values.metrics "disabled" }}
+#    useMetrics: "false"
+#    {{- else }}
+#    useMetrics: "unknown"
+#    {{- end}}
+#    {{- if eq .Values.printname "enabled" }}
+#    myname: "Sasidhar"
+#    {{- end}}
+#    places: "{{range .Values.places }}{{.}} {{ end }}"
+#    index_places: "{{range $i, $p := .Values.places }}{{$i}}_{{$p}} {{ end }}"
+#    {{- range $key, $val := .Values.otherenv}}
+#    {{$key}}: {{$val}}
+#    {{- end }}
+#    address01: {{- range .Values.address01}} {{.}} {{- end}}
+#    address03: {{- range $a := .Values.address01}} {{$a}} {{- end}}
+#    {{- with .Values.address02 }}
+#    address02: "{{.street}}, {{.city}}, {{.state}}"
+#    {{- end}}
+#
+#
+#
+##kubectl create -f config-map.yml
+##kubectl get configmaps
+##kubectl describe configmaps

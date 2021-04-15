@@ -1,0 +1,5 @@
+namespace: prod
+service:
+  type: NodePort
+  port: 30003
+

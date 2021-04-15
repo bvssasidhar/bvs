@@ -38,16 +38,16 @@ Common labels
 helm.sh/chart: {{ include "quotegen.chart" . }}
 {{ include "quotegen.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+version: {{ .Chart.AppVersion | quote }}
 {{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
+managed-by: {{ .Release.Service }}
 {{- end }}
 
 {{/*
 Selector labels
 */}}
 {{- define "quotegen.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "quotegen.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
+name: {{ include "quotegen.name" . }}
+instance: {{ .Release.Name }}
 {{- end }}
 
